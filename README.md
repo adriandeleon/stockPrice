@@ -5,7 +5,7 @@
 
 **StockPrice** is a simple Java 25+ compact source file script example.  
 
-It demonstrates how to run Java file directly from source files without a build tool and without compiling (no `javac`, Maven or Gradle required).
+It demonstrates how to run a Java file directly from source files without a build tool and without compiling (no `javac`, Maven or Gradle required).
 
 The example source code is based on the third example in this Jetbrains Blog post: [Java 24: Build Games, Prototypes, Utilities, and More –With Less Boilerplate](https://blog.jetbrains.com/idea/2025/02/java-24-build-games-prototypes-utilities-and-more-with-less-boilerplate/#3.-building-utilities,-such-as-a-stock-price-scraper). 
 
