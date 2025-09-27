@@ -1,23 +1,47 @@
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-/// The Main class serves as the entry point for a stock price retrieval and display application.
-/// It interacts with the Yahoo Finance webpage to fetch stock information for a user-specified ticker symbol.
-/// The primary responsibilities of the class include:
-/// - Prompting the user for a stock ticker symbol.
-/// - Fetching the associated stock data (name and price) by scraping the Yahoo Finance website.
-/// - Displaying the stock information in a structured format.
-/// The class also calls a helper method to parse and format the stock price details.
+
+/// The entry point of the program. This method retrieves the stock name and price
+/// for a given stock ticker symbol by fetching data from Yahoo Finance.
+/// The stock ticker symbol can be provided as a command-line argument.
+/// If not provided, the user will be prompted to input it. The stock's
+/// information is then processed and displayed.
 ///
-/// @throws IOException if an input or output exception occurs while accessing external resources.
-void main() throws IOException {
+/// @param args command-line arguments. args[0] may contain the stock ticker symbol
+///             to be used for fetching the stock's information.
+/// @throws IOException if there is an error in reading input or connecting to the
+///                     website to retrieve stock data.
+void main(String[] args) throws IOException {
+
+    String stockSymbol = (args.length > 0 && !args[0].isBlank()) ? args[0] : null;
 
     IO.println("Welcome to Stock Price!");
-    final String stockSymbol =  IO.readln("Please enter a stock ticker symbol (e.g. AAPL): ");
 
-    final Document doc = Jsoup.connect("https://finance.yahoo.com/quote/" + stockSymbol).get();
-    final String stockName = Objects.requireNonNull(doc.selectFirst("h1.yf-4vbjci")).text();
-    final String stockPrice = Objects.requireNonNull(doc.selectFirst(".price")).text();
+    if (stockSymbol == null) {
+        stockSymbol =  IO.readln("Please enter a stock ticker symbol (e.g. AAPL): ");
+    }
+
+    if (stockSymbol == null || stockSymbol.isBlank()) {
+        System.err.println("No stock symbol provided.");
+        System.exit(1);
+    }
+
+    String stockName = null;
+    String stockPrice = null;
+    try {
+        final Document doc = Jsoup.connect("https://finance.yahoo.com/quote/" + stockSymbol).get();
+        stockName = Objects.requireNonNull(doc.selectFirst("h1.yf-4vbjci")).text();
+        stockPrice = Objects.requireNonNull(doc.selectFirst(".price")).text();
+    } catch (HttpStatusException e) {
+        if(e.getStatusCode()  == 404) {
+            System.err.println("Cannot find the stock ticker symbol: " + stockSymbol);
+            System.exit(1);
+        }
+        System.err.println("Error: " + e.getStatusCode() + ": " + e.getMessage());
+        System.exit(1);
+    }
 
     IO.println();
     IO.println("Stock Name: " + stockName);
