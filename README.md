@@ -1,4 +1,4 @@
-# StockPrice, a Java 25+ Compact source file script.
+# StockPrice, a Java 25+ Compact source file script. (Example project)
 
 ## Files:
 - `README.md`: This file.
