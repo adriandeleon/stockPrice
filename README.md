@@ -1,5 +1,8 @@
 # StockPrice
 
+
+[![Java CI](https://github.com/adriandeleon/stockPrice/actions/workflows/ci.yml/badge.svg)](https://github.com/adriandeleon/stockPrice/actions/workflows/ci.yml)
+
 **StockPrice** is a simple Java 25+ compact source file script example.  
 
 It demonstrates how to run Java file directly from source files without a build tool and without compiling (no `javac`, Maven or Gradle required).
@@ -29,6 +32,7 @@ StockPrice/
     - `run.sh` → Linux, macOS, or WSL
 - **Automatic Java version check**: requires **JDK 25 or later**.
 - **Zero build tools**: no Maven or Gradle needed.
+- Send a stock symbol as a command line argument.
 
 Modify the `Main.java` code as you wish, delete/add any `JAR` files in the `libs/` directory, add more files to the `src/` directory: No need to change the run scripts in any way.
 
@@ -52,24 +56,25 @@ Clone the repository:
 
 ```sh
 git clone https://github.com/adriandeleon/StockPrice.git
-cd StockPrice
 ```
 
 Run on **Windows**:
 
 ```bat
-run.bat
+run.bat MSFT
 ```
 
 Run on **Linux / macOS / WSL**:
 
 ```sh
-./run.sh
+./run.sh AAPL
 ```
 
 Both launchers will:
 1. Verify that Java 25+ is installed.
-2. Run the script directly:
+2. Pass the stock symbol as a command line argument.
+3. If you leave blank the stock symbol, the script will prompt you to enter one.
+4. Run the script directly:
 
 ```sh
 java --class-path "libs/*;src" src/Main.java
@@ -79,11 +84,7 @@ java --class-path "libs/*;src" src/Main.java
 
 ## 📦 Version
 
-**1.0.0**
-
----
-## 🔮 Future
-Add support for command line arguments and options.
+**1.1.0**
 
 ---
 
