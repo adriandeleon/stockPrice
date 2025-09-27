@@ -42,7 +42,6 @@ void main(String[] args) throws IOException {
         System.err.println("Error: " + e.getStatusCode() + ": " + e.getMessage());
         System.exit(1);
     }
-
     IO.println();
     IO.println("Stock Name: " + stockName);
     IO.print(formatAndDisplayStockPrice(stockPrice));
@@ -58,13 +57,11 @@ void main(String[] args) throws IOException {
 /// @return a formatted string containing structured stock price information. Returns null if the
 ///         input is null or empty, or if an unexpected format causes an exception.
 public static String formatAndDisplayStockPrice(String stockPrice) {
-
     if (stockPrice == null || stockPrice.isEmpty()) {
         IO.println("No stock price data available.");
 
         return null;
     }
-
     final String[] parts = stockPrice.split("\\s+");
     final StringBuilder formattedOutput = new StringBuilder();
 
@@ -90,6 +87,5 @@ public static String formatAndDisplayStockPrice(String stockPrice) {
     } catch (ArrayIndexOutOfBoundsException e) {
         System.out.println("Unexpected format in stock price data. Raw data: " + stockPrice);
     }
-
     return formattedOutput.toString();
 }
