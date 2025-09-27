@@ -91,5 +91,6 @@ java --class-path "libs/*;src" src/Main.java
 ## 📜 License
 
 This project is licensed under the **MIT License**.  
+
 See the [LICENSE](LICENSE) file for details.
 
