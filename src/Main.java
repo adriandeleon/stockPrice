@@ -1,5 +1,6 @@
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
 /// The Main class serves as the entry point for a stock price retrieval and display application.
 /// It interacts with the Yahoo Finance webpage to fetch stock information for a user-specified ticker symbol.
 /// The primary responsibilities of the class include:
