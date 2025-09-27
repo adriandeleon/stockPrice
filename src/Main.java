@@ -1,6 +1,14 @@
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
+/// The Main class serves as the entry point for a stock price retrieval and display application.
+/// It interacts with the Yahoo Finance webpage to fetch stock information for a user-specified ticker symbol.
+/// The primary responsibilities of the class include:
+/// - Prompting the user for a stock ticker symbol.
+/// - Fetching the associated stock data (name and price) by scraping the Yahoo Finance website.
+/// - Displaying the stock information in a structured format.
+/// The class also calls a helper method to parse and format the stock price details.
+///
+/// @throws IOException if an input or output exception occurs while accessing external resources.
 void main() throws IOException {
 
     IO.println("Welcome to Stock Price!");
@@ -15,6 +23,15 @@ void main() throws IOException {
     IO.print(formatAndDisplayStockPrice(stockPrice));
 }
 
+/// Formats and displays stock price information extracted from a raw string input.
+/// The method parses the given stock price data, organizes it into a readable layout,
+/// and returns the formatted output as a string. If the input is null or empty,
+/// a message indicating the absence of stock price data is printed and the method returns null.
+///
+/// @param stockPrice the raw string containing stock price information. Expected to include
+///                   various parts of stock data separated by whitespace.
+/// @return a formatted string containing structured stock price information. Returns null if the
+///         input is null or empty, or if an unexpected format causes an exception.
 public static String formatAndDisplayStockPrice(String stockPrice) {
 
     if (stockPrice == null || stockPrice.isEmpty()) {
@@ -23,8 +40,8 @@ public static String formatAndDisplayStockPrice(String stockPrice) {
         return null;
     }
 
-    String[] parts = stockPrice.split("\\s+");
-    StringBuilder formattedOutput = new StringBuilder();
+    final String[] parts = stockPrice.split("\\s+");
+    final StringBuilder formattedOutput = new StringBuilder();
 
     try {
         formattedOutput.append(String.format("""
@@ -48,5 +65,6 @@ public static String formatAndDisplayStockPrice(String stockPrice) {
     } catch (ArrayIndexOutOfBoundsException e) {
         System.out.println("Unexpected format in stock price data. Raw data: " + stockPrice);
     }
+
     return formattedOutput.toString();
 }
