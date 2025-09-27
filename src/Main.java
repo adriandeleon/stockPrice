@@ -2,7 +2,6 @@ import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-
 /// The entry point of the program. This method retrieves the stock name and price
 /// for a given stock ticker symbol by fetching data from Yahoo Finance.
 /// The stock ticker symbol can be provided as a command-line argument.
@@ -85,7 +84,7 @@ public static String formatAndDisplayStockPrice(String stockPrice) {
         }
 
     } catch (ArrayIndexOutOfBoundsException e) {
-        System.out.println("Unexpected format in stock price data. Raw data: " + stockPrice);
+        System.err.println("Unexpected format in stock price data. Raw data: " + stockPrice);
     }
     return formattedOutput.toString();
 }
