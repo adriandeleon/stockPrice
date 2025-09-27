@@ -7,6 +7,9 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+env:
+  STOCK_SYMBOL: AAPL  # Change this if your script expects another default
+
 jobs:
   build:
     name: Run script on ${{ matrix.os }}
@@ -36,11 +39,16 @@ jobs:
         if: runner.os != 'Windows'
         run: chmod +x ./run.sh
 
-      - name: Run on Linux/macOS
+      # ===== Non-Windows runs: pipe a single line of input =====
+      - name: Run on Linux/macOS with piped input
         if: runner.os != 'Windows'
-        run: ./run.sh
+        run: |
+          printf "%s\n" "$STOCK_SYMBOL" | ./run.sh
 
-      - name: Run on Windows
+      # ===== Windows run: pipe a single line of input =====
+      - name: Run on Windows with piped input
         if: runner.os == 'Windows'
         shell: cmd
-        run: .\run.bat
+        run: |
+          echo %STOCK_SYMBOL% | .\run.bat
+
