@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Run script on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 25 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Show Java version
+        run: java -version
+
+      - name: Make POSIX launcher executable (non-Windows)
+        if: runner.os != 'Windows'
+        run: chmod +x ./run.sh
+
+      - name: Run on Linux/macOS
+        if: runner.os != 'Windows'
+        run: ./run.sh
+
+      - name: Run on Windows
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: .\run.bat
