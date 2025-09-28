@@ -19,7 +19,7 @@ StockPrice/
 ├── src/Main.java  # Main script file (Java 25+ compact source, you can add more files if needed).
 ├── libs/*         # Optional JAR dependencies (Java classpath, only if needed).
 ├── run.bat        # Windows 10/11 batch launcher.
-└── run.sh         # POSIX shell launcher (Linux, MacOS, WSL).
+└── run.sh         # POSIX shell launcher (Linux, macOS, WSL).
 ```
 
 ---
@@ -69,7 +69,7 @@ On **Windows**: run: (_`MSFT`_ is an optional command line argument, in this cas
 run.bat MSFT
 ```
 
-On **Linux / MacOS / WSL** run: 
+On **Linux / macOS / WSL** run: 
 
 ```sh
 ./run.sh MSFT
