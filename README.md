@@ -16,10 +16,10 @@ The example source code is based on the third example in this Jetbrains Blog pos
 ```
 StockPrice/
 ├── README.md      # Project documentation.
-├── src/Main.java  # Main script file (Java 25 compact source, you can add more files if needed).
-├── libs/*         # Optional JAR dependencies (classpath, only if needed).
+├── src/Main.java  # Main script file (Java 25+ compact source, you can add more files if needed).
+├── libs/*         # Optional JAR dependencies (Java classpath, only if needed).
 ├── run.bat        # Windows 10/11 batch launcher.
-└── run.sh         # POSIX shell launcher (Linux, macOS, WSL).
+└── run.sh         # POSIX shell launcher (Linux, MacOS, WSL).
 ```
 
 ---
@@ -34,7 +34,12 @@ StockPrice/
 - **Zero build tools**: no Maven or Gradle needed.
 - Send a stock symbol as a command line argument.
 
-Modify the `Main.java` code as you wish, delete/add any `JAR` files in the `libs/` directory, add more files to the `src/` directory: No need to change the run scripts in any way.
+## 🪜 Steps
+
+- Modify the `Main.java` code as you wish.
+- Delete/add any `JAR` files in the `libs/` directory.
+- Add more files to the `src/` directory and reference them in `Main.java`, if needed.
+- No need to change the run scripts in any way.
 
 ---
 
@@ -58,21 +63,21 @@ Clone the repository:
 git clone https://github.com/adriandeleon/StockPrice.git
 ```
 
-Run on **Windows**:
+On **Windows**: run: (_`MSFT`_ is an optional command line argument, in this case the stock symbol for [Microsoft](https://finance.yahoo.com/quote/MSFT/))
 
 ```bat
 run.bat MSFT
 ```
 
-Run on **Linux / macOS / WSL**:
+On **Linux / MacOS / WSL** run: 
 
 ```sh
-./run.sh AAPL
+./run.sh MSFT
 ```
 
 Both launchers will:
 1. Verify that Java 25+ is installed.
-2. Pass the stock symbol as a command line argument.
+2. Pass the stock symbol as a command line argument, if provided.
 3. If you leave blank the stock symbol, the script will prompt you to enter one.
 4. Run the script directly:
 
