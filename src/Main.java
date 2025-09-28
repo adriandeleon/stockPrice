@@ -14,18 +14,17 @@ import org.jsoup.nodes.Document;
 ///                     website to retrieve stock data.
 void main(String[] args) throws IOException {
     final String version = "1.1.0";
+    String firstArg = (args.length > 0 && !args[0].isBlank()) ? args[0] : null;
 
-    // 1) Handle flags first
-    if (args.length > 0 && ("--version".equals(args[0]) || "-v".equals(args[0]))) {
-        System.out.println("StockPrice version " + version);
+    // Handle flags first.
+    if (args.length > 0 && ("--version".equals(firstArg) || "-v".equals(firstArg))) {
+        printVersion(version);
         System.exit(0);
     }
-    if (args.length > 0 && ("--help".equals(args[0]) || "-h".equals(args[0]))) {
+    if (args.length > 0 && ("--help".equals(firstArg) || "-h".equals(firstArg))) {
         printHelp(version);
         System.exit(0);
     }
-
-    String firstArg = (args.length > 0 && !args[0].isBlank()) ? args[0] : null;
 
     IO.println("Welcome to Stock Price " + version + "!");
 
@@ -41,6 +40,7 @@ void main(String[] args) throws IOException {
         System.exit(1);
     }
 
+    // Extract data from Yahoo Finance.
     String stockName = null;
     String stockPrice = null;
     try {
@@ -56,6 +56,7 @@ void main(String[] args) throws IOException {
         System.err.println("Error: " + e.getStatusCode() + ": " + e.getMessage());
         System.exit(1);
     }
+
     IO.println();
     IO.println("Stock Name: " + stockName);
     IO.print(formatAndDisplayStockPrice(stockPrice));
@@ -104,8 +105,13 @@ public static String formatAndDisplayStockPrice(String stockPrice) {
     return formattedOutput.toString();
 }
 
+private static void printVersion(String version) {
+   IO.println("StockPrice " + version);
+}
+
 private static void printHelp(String version) {
-    IO.println("StockPrice version " + version);
+    printVersion(version);
+
     IO.println("Usage: run.bat <stock-symbol> or run.sh <stock-symbol>");
     IO.println("you can also run the Main.class directly with: java Main.java");
     IO.println("Options:");
