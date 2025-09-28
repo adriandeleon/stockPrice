@@ -37,7 +37,7 @@ StockPrice/
 ## 🪜 Steps
 
 - Modify the `Main.java` code as you wish.
-- Delete/add any `JAR` files in the `libs/` directory.
+- Delete/add any `JAR` files in the `libs/` directory as required.
 - Add more files to the `src/` directory and reference them in `Main.java`, if needed.
 - No need to change the run scripts in any way.
 
