@@ -14,7 +14,20 @@ import org.jsoup.nodes.Document;
 ///                     website to retrieve stock data.
 void main(String[] args) throws IOException {
     final String version = "1.1.0";
+
+    // 1) Handle flags first
+    if (args.length > 0 && ("--version".equals(args[0]) || "-v".equals(args[0]))) {
+        System.out.println("StockPrice version " + version);
+        System.exit(0);
+    }
+    if (args.length > 0 && ("--help".equals(args[0]) || "-h".equals(args[0]))) {
+        printHelp(version);
+        System.exit(0);
+    }
+
     String firstArg = (args.length > 0 && !args[0].isBlank()) ? args[0] : null;
+
+    IO.println("Welcome to Stock Price " + version + "!");
 
     String stockSymbol;
     if (firstArg == null) {
@@ -23,32 +36,14 @@ void main(String[] args) throws IOException {
         stockSymbol = firstArg;
     }
 
-    if (firstArg == null || firstArg.isBlank()) {
+    if (stockSymbol == null || stockSymbol.isBlank()) {
         System.err.println("No stock symbol provided.");
-        System.exit(1);
-    }
-
-    // Handle the version flag.
-    if ("--version".equals(firstArg) || "-v".equals(firstArg)) {
-        IO.println("StockPrice version " + version);
-        System.exit(1);
-    }
-
-    // Handle the help flag.
-    if ("--help".equals(firstArg) || "-h".equals(firstArg)) {
-        IO.println("StockPrice version " + version);
-        IO.println("Usage: run.bat <stock-symbol> or run.sh <stock-symbol>");
-        IO.println("you can also run the Main.class directly with: java Main.java");
-        IO.println("Options:");
-        IO.println("  --version   Show version");
-        IO.println("  --help      Show help");
         System.exit(1);
     }
 
     String stockName = null;
     String stockPrice = null;
     try {
-        IO.println("Welcome to Stock Price " + version + "!");
         final Document doc = Jsoup.connect("https://finance.yahoo.com/quote/" + stockSymbol).get();
 
         stockName = Objects.requireNonNull(doc.selectFirst("h1.yf-4vbjci")).text();
@@ -107,4 +102,13 @@ public static String formatAndDisplayStockPrice(String stockPrice) {
         System.err.println("Unexpected format in stock price data. Raw data: " + stockPrice);
     }
     return formattedOutput.toString();
+}
+
+private static void printHelp(String version) {
+    IO.println("StockPrice version " + version);
+    IO.println("Usage: run.bat <stock-symbol> or run.sh <stock-symbol>");
+    IO.println("you can also run the Main.class directly with: java Main.java");
+    IO.println("Options:");
+    IO.println("  --version   Show version");
+    IO.println("  --help      Show help");
 }
