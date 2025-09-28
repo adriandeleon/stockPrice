@@ -13,24 +13,44 @@ import org.jsoup.nodes.Document;
 /// @throws IOException if there is an error in reading input or connecting to the
 ///                     website to retrieve stock data.
 void main(String[] args) throws IOException {
+    final String version = "1.1.0";
+    String firstArg = (args.length > 0 && !args[0].isBlank()) ? args[0] : null;
 
-    String stockSymbol = (args.length > 0 && !args[0].isBlank()) ? args[0] : null;
-
-    IO.println("Welcome to Stock Price!");
-
-    if (stockSymbol == null) {
-        stockSymbol =  IO.readln("Please enter a stock ticker symbol (e.g. AAPL): ");
+    String stockSymbol;
+    if (firstArg == null) {
+        stockSymbol = IO.readln("Please enter a stock ticker symbol (e.g. AAPL): ");
+    } else {
+        stockSymbol = firstArg;
     }
 
-    if (stockSymbol == null || stockSymbol.isBlank()) {
+    if (firstArg == null || firstArg.isBlank()) {
         System.err.println("No stock symbol provided.");
+        System.exit(1);
+    }
+
+    // Handle the version flag.
+    if ("--version".equals(firstArg) || "-v".equals(firstArg)) {
+        IO.println("StockPrice version " + version);
+        System.exit(1);
+    }
+
+    // Handle the help flag.
+    if ("--help".equals(firstArg) || "-h".equals(firstArg)) {
+        IO.println("StockPrice version " + version);
+        IO.println("Usage: run.bat <stock-symbol> or run.sh <stock-symbol>");
+        IO.println("you can also run the Main.class directly with: java Main.java");
+        IO.println("Options:");
+        IO.println("  --version   Show version");
+        IO.println("  --help      Show help");
         System.exit(1);
     }
 
     String stockName = null;
     String stockPrice = null;
     try {
+        IO.println("Welcome to Stock Price " + version + "!");
         final Document doc = Jsoup.connect("https://finance.yahoo.com/quote/" + stockSymbol).get();
+
         stockName = Objects.requireNonNull(doc.selectFirst("h1.yf-4vbjci")).text();
         stockPrice = Objects.requireNonNull(doc.selectFirst(".price")).text();
     } catch (HttpStatusException e) {
@@ -68,12 +88,12 @@ public static String formatAndDisplayStockPrice(String stockPrice) {
         formattedOutput.append(String.format("""
             
             ---------- Stock Price Information ----------
-            Stock Price (At close): %s
-            Change: %s (%s%%)
-            Closing Time: %s %s %s %s
-            After Hours Price: %s
-            Change (After hours): %s (%s)
-            After Hours Time: %s %s %s
+            Stock Price (At close) : %s
+            Change                 : %s (%s%%)
+            Closing Time           : %s %s %s %s
+            After Hours Price      : %s
+            Change (After hours)   : %s (%s)
+            After Hours Time       : %s %s %s
             
             ----------- Additional Information -----------
             """, parts[2], parts[3], parts[4], parts[6], parts[7], parts[8],
