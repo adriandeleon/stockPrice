@@ -33,6 +33,9 @@ StockPrice/
 - **Automatic Java version check**: requires **JDK 25 or later**.
 - **Zero build tools**: no Maven or Gradle needed.
 - Send a stock symbol as a command line argument.
+- Prompt for a stock symbol if none is provided.
+- Support for command line arguments:`--help`, `-h`, `--version` and `-v`.
+- **Optional** JAR dependencies ( Java classpath, only if needed)
 
 ## 🪜 Steps
 
@@ -89,7 +92,7 @@ java --class-path "libs/*;src" src/Main.java
 
 ## 📦 Version
 
-**1.1.0**
+**1.1.1**
 
 ---
 
